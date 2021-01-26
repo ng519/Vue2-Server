@@ -14,8 +14,7 @@ MongoClient.connect("mongodb+srv://testboy:testboy@cluster0.pkzla.mongodb.net/vu
 })
 
 // dispaly a message for root path to show that API is working
-app.get('/'
-, function (req, res) {
+app.get('/', function (req, res) {
     res.send('Select a collection, e.g., /collection/messages')
 })
 
