@@ -1,6 +1,8 @@
 var express = require("express");
 var app = express();
 
+const port = process.env.PORT || 3000
+
 app.use(express.json());
 
 const MongoClient = require('mongodb').MongoClient;
@@ -41,6 +43,6 @@ app.post('/collection/:collectionName', (req, res, next) => {
     })
 })
 
-app.listen(3000, function() {
+app.listen(port, function() {
     console.log("Hi");
 });

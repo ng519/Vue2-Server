@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Vue.js Pet Depot</title>
+
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+
+  <body>
+<h1>Hi</h1>
+
+<h5> Subject: {{ product }}</h5>
+
+    <script>
+        
+
+        let store = new Vue({
+        data: { product: {} },
+        created: function() { // this function will be run automatically
+            // when creating the Vue instance
+            fetch('https://assignment2vue.herokuapp.com/').then( //HERE
+                function (response) {
+                    response.json().then(
+                    function (json) {
+                    // save the returned JSON object to 'product'
+                    // note that we used 'store.product' instead of 'this.product'
+                    store.product = json;
+                });
+            })
+            }
+        })
+    </script>
+  </body>
+</html>
