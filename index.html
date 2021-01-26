@@ -8,39 +8,61 @@
   </head>
 
   <body>
+    <div id = "app">
 <h1>Hi</h1>
 
-<h5> Subject: {{ product }}</h5>
+<h5> Subject: {{ Lessons }}</h5>
 
-    <script>
-        
-        let store = new Vue({
-        data: { product: {} },
-        created: function() { 
-            // this function will be run automatically
-            // when creating the Vue instance
-                
-                //const newProduct = {title: 'new product', price: 49};
-                const newProduct = 
-                {
-                    "Topic": "Math", "Price": 20, 
-                    "Location": "Blackbird Down","Space": 5
-                }
-
-            // set the url to your server and route
-            fetch('https://assignment2vue.herokuapp.com/collection/Lessons', {
-                method: 'POST', // set the HTTP method as 'POST'
-                headers: {
-                'Content-Type': 'application/json', // set the data type as JSON
-                },
-                body: JSON.stringify(newProduct), // need to stringify the JSON object
-            })
-                .then(response => response.json())
-                .then(responseJSON => {
-                console.log('Success:', responseJSON);
-                });
-            }
-        });
-    </script>
+    </div>
   </body>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ 
+  <script>
+        
+    var webstore = new Vue({
+    el: '#app',
+    data: { 
+        Lessons: {
+            Topic: "",
+            Price: "",
+            Location: "",
+            Space: ""
+        } 
+    },
+    created: function() { 
+        // this function will be run automatically
+        // when creating the Vue instance
+            
+            //const newProduct = {title: 'new product', price: 49};
+            const newProduct = 
+            {
+                "Topic": "Math", "Price": 20, 
+                "Location": "Blackbird Down","Space": 5
+            }
+            fetch('https://assignment2vue.herokuapp.com/collection/Lessons').then(
+            function (response) {
+            response.json().then(
+            function (json) {
+            // note that we used 'store.product' instead of 'this.product'
+            webstore.Lessons = json;
+            });
+            })
+        // // set the url to your server and route
+        // fetch('https://assignment2vue.herokuapp.com/collection/Lessons', {
+        //     method: 'POST', // set the HTTP method as 'POST'
+        //     headers: {
+        //     'Content-Type': 'application/json', // set the data type as JSON
+        //     },
+        //     body: JSON.stringify(newProduct), // need to stringify the JSON object
+        // })
+        //     .then(response => response.json())
+        //     .then(responseJSON => {
+        //     console.log('Success:', responseJSON);
+        //     });
+        }
+    });
+</script>
 </html>
