@@ -14,22 +14,33 @@
 
     <script>
         
-
         let store = new Vue({
         data: { product: {} },
-        created: function() { // this function will be run automatically
+        created: function() { 
+            // this function will be run automatically
             // when creating the Vue instance
-            fetch('https://assignment2vue.herokuapp.com/').then( //HERE
-                function (response) {
-                    response.json().then(
-                    function (json) {
-                    // save the returned JSON object to 'product'
-                    // note that we used 'store.product' instead of 'this.product'
-                    store.product = json;
-                });
+                
+                //const newProduct = {title: 'new product', price: 49};
+                const newProduct = 
+                {
+                    "Topic": "Math", "Price": 20, 
+                    "Location": "Blackbird Down","Space": 5
+                }
+
+            // set the url to your server and route
+            fetch('https://assignment2vue.herokuapp.com/collection/Lessons', {
+                method: 'POST', // set the HTTP method as 'POST'
+                headers: {
+                'Content-Type': 'application/json', // set the data type as JSON
+                },
+                body: JSON.stringify(newProduct), // need to stringify the JSON object
             })
+                .then(response => response.json())
+                .then(responseJSON => {
+                console.log('Success:', responseJSON);
+                });
             }
-        })
+        });
     </script>
   </body>
 </html>
