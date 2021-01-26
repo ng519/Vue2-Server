@@ -4,6 +4,17 @@ var app = express();
 const port = process.env.PORT || 3000
 
 app.use(express.json());
+app.use(function(req, res, next) {
+    // allow different IP address
+    res.header("Access-Control-Allow-Origin"
+    ,
+    "*");
+    // allow different header fields
+    res.header("Access-Control-Allow-Headers"
+    ,
+    "*");
+    next();
+});
 
 const MongoClient = require('mongodb').MongoClient;
 let db;
@@ -41,18 +52,6 @@ app.post('/collection/:collectionName', (req, res, next) => {
         res.send(results.ops)
     })
 })
-
-app.use(function(req, res, next) {
-    // allow different IP address
-    res.header("Access-Control-Allow-Origin"
-    ,
-    "*");
-    // allow different header fields
-    res.header("Access-Control-Allow-Headers"
-    ,
-    "*");
-    next();
-});
 
 app.listen(port, function() {
     console.log("Hi");
