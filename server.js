@@ -48,6 +48,7 @@ app.get('/collection/:collectionName', (req, res) => {
     req.collection.find({}).toArray((e, results) => {
     if (e) return next(e)
     res.send(results)
+    requestHandler(req, res);
     })
 })
 
@@ -81,6 +82,11 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
                 {msg: 'success'} : { msg: 'error'})
     })
 })
+
+function requestHandler(request, response) {
+    console.log("In comes a request to: " + request.url);
+    response.end("Hello, world!");
+}
 
 app.listen(port, function() {
     console.log("Hi");
