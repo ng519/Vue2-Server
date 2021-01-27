@@ -4,20 +4,87 @@
     <title>Vue.js Pet Depot</title>
 
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
     <script src="https://unpkg.com/vue"></script>
   </head>
 
   <body>
-    <div id = "app">
-<h1>Hi</h1>
+    <div class="container">
+        <div id = "app">
+            <header>
+                <button v-on:click='showCheckout' v-if='this.store.length >=1'>{{this.store.length}} 
+                <span class="fa fa-cart-plus"> </span> Checkout </button><br><br>
+            </header>
+            <main>
+                <div class="card-columns">
+                <div v-if = 'showProduct'>
+
+                    <div v-for="product in products">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <img class="card-img-top" v-bind:src="product.image" alt="Card image cap"> -->
+                            <!-- <h5 class="card-title"> Topic: {{ product.topic }}</h5>
+                            <p class="card-text">Location: {{ product.location }}</p>
+                            <p class="card-text">Price: {{product.price}}</p>
+                            <p class="card-text">Available: {{product.space}}</p>
+                            <button v-on:click='addToCart(product)' v-if='canAddToCart(product)'> Add to Cart</button>
+                            <button disabled = 'disabled' v-else> Add to Cart</button>  -->
+                        </div>
+                    </div>
+                    <button v-on:click=''> {{ product.topic }} </button>
+                </div>
+                <!-- <div v-else>
+                    <h2>Checkout</h2>
+                    
+                    <div v-for="(value, name) in productOrder">
+                        Subject: {{ value }} <button v-on:click="deleteEvent(name)">Delete</button>
+                    </div>
+    
+                        <br>
+                            <form>
+                                <p>
+                                    <strong>First Name: </strong>
+                                    /////This input field is bound to 'firstName' in the 'order' object
+                                    <input type="text" v-model.trim="order.firstName" required/>
+                                    <br>
+                                    <p>
+                                        <strong>Last Name: </strong>
+                                        //////This input field is bound to 'lastName' in the 'order' object
+                                        <input type="text" v-model.trim="order.lastName"/>
+                                    </p>
+                                    <br>
+                                    <p>
+                                        <strong>Phone Number: </strong> 
+                                        <input type="number" v-model="order.phoneNumber"/>
+                                    </p>
+                                    <br>
+                                </p>
+                            </form>
+    
+                            <p>First Name: {{ order.firstName }}</p><br>
+                            <p>Last Name: {{ order.lastName }}</p><br>
+                            <p>Phone Number: {{ order.phoneNumber }}</p><br>
+    
+                            <button v-if="order.firstName && order.lastName && order.phoneNumber" v-on:click="submitForm()">Place Order</button>
+                            <button disabled = 'disabled' v-else> Place Order</button>
+                </div> -->
+                </div>
+            </main>
+        </div>
+        </div>
+    <!-- <h1>Hi</h1>
 
 
-<h5>{{ Lessons[0].Location }}</h5>
-<h5>{{ Lessons[0].Price }}</h5>
-<h5>{{ Lessons[0].Space }}</h5>
-<h5>{{ Lessons[0].Topic }}</h5>
-<h5>{{ Lessons[0]._id }}</h5>
-
+    <h5>{{ Lessons[0].Location }}</h5>
+    <h5>{{ Lessons[0].Price }}</h5>
+    <h5>{{ Lessons[0].Space }}</h5>
+    <h5>{{ Lessons[0].Topic }}</h5>
+    <h5>{{ Lessons[0]._id }}</h5> -->
+    
     </div>
   </body>
 
@@ -30,13 +97,22 @@
     var webstore = new Vue({
     el: '#app',
     data: { 
-        Lessons: {
-            location: "",
-            price: "",
-            space: "",
-            topic: "",
-            _id: "",
-        }
+        showProduct: true,
+        sitename: 'The Shop',
+        filterIsSelected: false,
+        store: [], //Creation of an empty array called store
+        filtered: {
+            method: 'Unfiltered'
+        },
+        cending: {
+            method: 'Asc'
+        },
+        order: {
+                
+        },
+        productOrder: [],
+        products: [],
+        
         
     },
     created: function() { 
@@ -44,19 +120,22 @@
         // when creating the Vue instance
             
             //const newProduct = {title: 'new product', price: 49};
-            const newProduct = 
-            {
-                "Topic": "Math", "Price": 20, 
-                "Location": "Blackbird Down","Space": 5
-            }
-            fetch('https://assignment2vue.herokuapp.com/collection/Lessons').then(
-            function (response) {
+            // const newProduct = 
+            // {
+            //     "Topic": "Math", "Price": 20, 
+            //     "Location": "Blackbird Down","Space": 5
+            // }
+            fetch('https://assignment2vue.herokuapp.com/collection/Lessons').then(function (response) {
             response.json().then(
                 function (json) {
                     // note that we used 'store.product' instead of 'this.product'
-                    webstore.Lessons = json;
-                    console.log(webstore.Lessons);
-                });
+                    
+
+                    webstore.products = json;
+                    
+                    console.log(webstore.products);
+                })
+                
             })
         // // set the url to your server and route
         // fetch('https://assignment2vue.herokuapp.com/collection/Lessons', {
@@ -70,7 +149,51 @@
         //     .then(responseJSON => {
         //     console.log('Success:', responseJSON);
         //     });
-        }
+        },
+        methods:{
+            getit: function(){
+                fetch('https://assignment2vue.herokuapp.com/collection/Lessons').then(function (response) {
+                response.json().then(
+                    function (json) {
+                        // note that we used 'store.product' instead of 'this.product'
+                        
+
+                        webstore.products = json;
+                        
+                        console.log(webstore.products);
+                    }) 
+                }) 
+            },
+            addToCart(product){
+                this.store.push(product.id);
+                this.productOrder.push(product.SubjectTitle);
+                product.showInventory -= 1;
+            },
+            showCheckout: function(){
+                this.showProduct =this.showProduct ? false : true;
+            },
+            submitForm(){
+                alert('order has been placed')
+            },
+            canAddToCart(product){
+                return product.availableInventory > this.cartItemCount(product.id);
+            },
+            cartItemCount(id){
+                let count = 0;
+                for(let i = 0; i < this.store.length; i++) {
+                    if (this.store[i] === id) {
+                        count++;
+                    }
+                }
+                return count;
+            },
+            deleteEvent: function(index) {
+                this.productOrder.splice(index, 1);
+            },
+        }, 
+        computed:{
+           
+        }  
     });
 </script>
 </html>
