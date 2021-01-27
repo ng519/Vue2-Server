@@ -68,9 +68,12 @@ app.post('/collection/:collectionName', (req, res, next) => {
 app.put('/collection/:collectionName/:id', (req, res, next) => {
     req.collection.findOne(
         { _id: new ObjectID(req.params.id) }, 
-        (e, results) => {
+        { $set: req.body },
+        { safe: true, multi: false },
+        (e, result) => {
             if (e) return next(e)
-            res.send(results)
+            res.send((result.result.n === 1) ?
+            {msg: 'success'} : { msg: 'error'})
         })
 })
 
