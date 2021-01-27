@@ -52,6 +52,8 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
         (e, results) => {
             if (e) return next(e)
             res.send(results.topic)
+            res.send(results.location)
+            res.send(results.price)
         })
 })
 
