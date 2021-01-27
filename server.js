@@ -6,19 +6,19 @@ var fs = require("fs");
 const port = process.env.PORT || 3000
 const ObjectID = require('mongodb').ObjectID
 
-app.use(function(req, res, next) {
-    // Uses path.join to find the path where the file should be
-    var filePath = path.join(/img/place.jpg, "static", req.url);
-    // Built-in fs.stat gets info about a file
-    fs.stat(filePath, function(err, fileInfo) {
-    if (err) {
-    next();
-    return;
-    }
-    if (fileInfo.isFile()) res.sendFile(filePath);
-    else next();
-    });
-});
+// app.use(function(req, res, next) {
+//     // Uses path.join to find the path where the file should be
+//     var filePath = path.join(/img/place.jpg, "static", req.url);
+//     // Built-in fs.stat gets info about a file
+//     fs.stat(filePath, function(err, fileInfo) {
+//     if (err) {
+//     next();
+//     return;
+//     }
+//     if (fileInfo.isFile()) res.sendFile(filePath);
+//     else next();
+//     });
+// });
 
 app.use(express.json());
 app.use(function(req, res, next) {
