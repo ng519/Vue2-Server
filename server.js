@@ -17,6 +17,11 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    console.log("In comes a " + req.method + " to " + req.url);
+    next();
+});
+
 const MongoClient = require('mongodb').MongoClient;
 let db;
 
