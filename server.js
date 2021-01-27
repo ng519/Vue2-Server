@@ -48,8 +48,8 @@ app.get('/collection/:collectionName', (req, res) => {
 
 app.get('/collection/:collectionName/:id', (req, res, next) => {
     req.collection.findOne(
-        { _id: new ObjectID(req.params._id) }, 
-        (e, results) => {
+        { _id: new ObjectID(req.params.id) }, 
+        (e, result) => {
             if (e) return next(e)
             res.send((result))
         })
