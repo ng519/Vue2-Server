@@ -51,7 +51,8 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
         { _id: new ObjectID(req.params.id) }, 
         (e, results) => {
             if (e) return next(e)
-            res.send((results.Topic))
+            res.send(results.topic)
+            res.send(results.location)
         })
 })
 
