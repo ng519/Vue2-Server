@@ -66,7 +66,7 @@ app.post('/collection/:collectionName', (req, res, next) => {
 
 // Update space avail.
 app.put('/collection/:collectionName/:id', (req, res, next) => {
-    req.collection.findOne(
+    req.collection.update(
         { _id: new ObjectID(req.params.id) }, 
         { $set: req.body },
         { safe: true, multi: false },
