@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 
 const port = process.env.PORT || 3000
+const ObjectID = require('mongodb').ObjectID
 
 app.use(express.json());
 app.use(function(req, res, next) {
@@ -45,6 +46,16 @@ app.get('/collection/:collectionName', (req, res) => {
     })
 })
 
+app.get('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.findOne(
+        { _id: new ObjectID(req.params.id) }, 
+        (e, results) => {
+            if (e) return next(e)
+            res.send((result))
+        })
+})
+
+
 // insert info into DB
 app.post('/collection/:collectionName', (req, res, next) => {
     req.collection.insert(req.body, (e, results) => {
@@ -52,6 +63,8 @@ app.post('/collection/:collectionName', (req, res, next) => {
         res.send(results.ops)
     })
 })
+
+
 
 app.listen(port, function() {
     console.log("Hi");
