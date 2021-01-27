@@ -48,7 +48,7 @@ app.get('/collection/:collectionName', (req, res) => {
     req.collection.find({}).toArray((e, results) => {
     if (e) return next(e)
     res.send(results)
-    requestHandler(req, res);
+        requestHandler(req, res);
     })
 })
 
@@ -58,6 +58,7 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
         (e, results) => {
             if (e) return next(e)
             res.send(results)
+            requestHandler(req, res);
         })
 })
 
@@ -67,6 +68,7 @@ app.post('/collection/:collectionName', (req, res, next) => {
     req.collection.insert(req.body, (e, results) => {
         if (e) return next(e)
         res.send(results.ops)
+        requestHandler(req, res);
     })
 })
 
@@ -80,6 +82,7 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
             if (e) return next(e)
                 res.send((result.result.n === 1) ?
                 {msg: 'success'} : { msg: 'error'})
+                requestHandler(req, res);
     })
 })
 
@@ -90,4 +93,5 @@ function requestHandler(request, response) {
 
 app.listen(port, function() {
     console.log("Hi");
+    requestHandler(req, res);
 });
