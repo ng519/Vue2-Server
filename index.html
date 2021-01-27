@@ -66,6 +66,8 @@
 
                     <button v-on:click="sendOrderToServer()">Place Order</button>
                 </div>
+
+                <button v-on:click="updateSpacesLeft()">Upd</button>
                 <!-- <div v-else>
                     <h2>Checkout</h2>
                     
@@ -177,6 +179,31 @@
                     .then(response => response.json())
                     .then(responseJSON => {
                         console.log('Success:', responseJSON);
+                    });
+            },
+            updateSpacesLeft(){
+                console.log(this.product[0].Space);
+                var x = this.product[0].Space - this.Testing.spac;
+                console.log("X " + x);
+                
+                const updateproduct = 
+                {
+                    "Space": x
+                }
+
+                fetch('https://assignment2vue.herokuapp.com/collection/Lessons/601010f7038bba0015a021ca', {
+                    method: 'PUT', // set the HTTP method as 'PUT'
+                    headers: {
+                    'Content-Type': 'application/json', // set the data type as JSON
+                    },
+                    body: JSON.stringify(updateproduct), // need to stringify the JSON object
+                })
+                    .then(response => response.json())
+                    .then(updateproduct => {
+                        console.log('Success:', updateproduct);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
                     });
             },
             addToCart(product){
