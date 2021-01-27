@@ -22,20 +22,19 @@
             <main>
                 <div class="card-columns">
                 <div v-if = 'showProduct'>
-
-                    <div v-for="product in products">
+                    <div v-for="product in product">
                     <div class="card">
                         <div class="card-body">
                             <!-- <img class="card-img-top" v-bind:src="product.image" alt="Card image cap"> -->
-                            <!-- <h5 class="card-title"> Topic: {{ product.topic }}</h5>
-                            <p class="card-text">Location: {{ product.location }}</p>
-                            <p class="card-text">Price: {{product.price}}</p>
-                            <p class="card-text">Available: {{product.space}}</p>
+                            <h5 class="card-title"> Topic: {{ product.Topic }}</h5>
+                            <p class="card-text">Location: {{ product.Location }}</p>
+                            <p class="card-text">Price: {{ product.Price }}</p>
+                            <p class="card-text">Available: {{ product.Space }}</p>
                             <button v-on:click='addToCart(product)' v-if='canAddToCart(product)'> Add to Cart</button>
-                            <button disabled = 'disabled' v-else> Add to Cart</button>  -->
+                            <button disabled = 'disabled' v-else> Add to Cart</button> 
                         </div>
                     </div>
-                    <button v-on:click=''> {{ product.topic }} </button>
+                    <!-- <button v-on:click='getit'> {{ product.topic }} </button> -->
                 </div>
                 <!-- <div v-else>
                     <h2>Checkout</h2>
@@ -76,14 +75,6 @@
             </main>
         </div>
         </div>
-    <!-- <h1>Hi</h1>
-
-
-    <h5>{{ Lessons[0].Location }}</h5>
-    <h5>{{ Lessons[0].Price }}</h5>
-    <h5>{{ Lessons[0].Space }}</h5>
-    <h5>{{ Lessons[0].Topic }}</h5>
-    <h5>{{ Lessons[0]._id }}</h5> -->
     
     </div>
   </body>
@@ -111,9 +102,8 @@
                 
         },
         productOrder: [],
-        products: [],
-        
-        
+        lessons: [],
+        product: "",    
     },
     created: function() { 
         // this function will be run automatically
@@ -130,10 +120,9 @@
                 function (json) {
                     // note that we used 'store.product' instead of 'this.product'
                     
-
-                    webstore.products = json;
+                    webstore.product = json;
                     
-                    console.log(webstore.products);
+                    console.log(webstore.product);
                 })
                 
             })
@@ -152,17 +141,10 @@
         },
         methods:{
             getit: function(){
-                fetch('https://assignment2vue.herokuapp.com/collection/Lessons').then(function (response) {
-                response.json().then(
-                    function (json) {
-                        // note that we used 'store.product' instead of 'this.product'
                         
-
-                        webstore.products = json;
-                        
-                        console.log(webstore.products);
-                    }) 
-                }) 
+                console.log(webstore.product.topic);
+                console.log(webstore.products.location);
+                console.log(webstore.products.price);
             },
             addToCart(product){
                 this.store.push(product.id);
