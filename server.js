@@ -93,5 +93,4 @@ function requestHandler(request, response) {
 
 app.listen(port, function() {
     console.log("Hi");
-    requestHandler(req, res);
 });
