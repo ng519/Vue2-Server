@@ -64,7 +64,15 @@ app.post('/collection/:collectionName', (req, res, next) => {
     })
 })
 
-
+// Update space avail.
+app.put('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.findOne(
+        { _id: new ObjectID(req.params.id) }, 
+        (e, results) => {
+            if (e) return next(e)
+            res.send(results)
+        })
+})
 
 app.listen(port, function() {
     console.log("Hi");
