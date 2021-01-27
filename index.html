@@ -30,11 +30,12 @@
                             <p class="card-text">Location: {{ product.Location }}</p>
                             <p class="card-text">Price: {{ product.Price }}</p>
                             <p class="card-text">Available: {{ product.Space }}</p>
-                            <button v-on:click='addToCart(product)' v-if='canAddToCart(product)'> Add to Cart</button>
-                            <button disabled = 'disabled' v-else> Add to Cart</button> 
+                            <button v-on:click='addToCart(product._id)'> Add to Cart</button>
+                            <!-- <button v-on:click='addToCart(product)' v-if='canAddToCart(product)'> Add to Cart</button> -->
+                            <!-- <button disabled = 'disabled' v-else> Add to Cart</button>  -->
                         </div>
                     </div>
-                    <!-- <button v-on:click='getit'> {{ product.topic }} </button> -->
+                    
                 </div>
                 <!-- <div v-else>
                     <h2>Checkout</h2>
@@ -102,7 +103,7 @@
                 
         },
         productOrder: [],
-        lessons: [],
+        lessons: "",
         product: "",    
     },
     created: function() { 
@@ -121,8 +122,8 @@
                     // note that we used 'store.product' instead of 'this.product'
                     
                     webstore.product = json;
-                    
-                    console.log(webstore.product);
+                    lessons = webstore.product;
+                    console.log(lessons);
                 })
                 
             })
@@ -140,16 +141,10 @@
         //     });
         },
         methods:{
-            getit: function(){
-                        
-                console.log(webstore.product.topic);
-                console.log(webstore.products.location);
-                console.log(webstore.products.price);
-            },
             addToCart(product){
-                this.store.push(product.id);
-                this.productOrder.push(product.SubjectTitle);
-                product.showInventory -= 1;
+                webstore.order = product;
+            //     this.order.push(product.SubjectTitle);
+            console.log(order);
             },
             showCheckout: function(){
                 this.showProduct =this.showProduct ? false : true;
@@ -157,9 +152,9 @@
             submitForm(){
                 alert('order has been placed')
             },
-            canAddToCart(product){
-                return product.availableInventory > this.cartItemCount(product.id);
-            },
+            // canAddToCart(product){
+            //     return product.space > this.cartItemCount(product.id);
+            // },
             cartItemCount(id){
                 let count = 0;
                 for(let i = 0; i < this.store.length; i++) {
